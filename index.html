@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mein Kulinarisches Universum</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e67e22; /* Ein appetitliches Orange */
+            --bg-color: #f4f4f4;
+            --card-bg: #ffffff;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            width: 100%;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 300;
+        }
+
+        p.subtitle {
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            width: 90%;
+            padding-bottom: 3rem;
+        }
+
+        /* Karten Design */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            text-decoration: none;
+            color: var(--text-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            border-bottom: 4px solid var(--accent-color);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Icon Styling (Emojis als Platzhalter) */
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* STATUS: NICHT VERFÜGBAR / AUSGEGRAUT */
+        .card.disabled {
+            background-color: #e0e0e0;
+            color: #888;
+            cursor: not-allowed;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            pointer-events: none; /* Verhindert das Klicken */
+            border-bottom: 4px solid #999;
+            box-shadow: none;
+        }
+        
+        .card.disabled:hover {
+            transform: none;
+        }
+
+        .status-badge {
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-top: auto; /* Drückt Badge nach unten */
+            background-color: #eee;
+        }
+
+        .active-badge {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Kulinarisches Universum</h1>
+        <p class="subtitle">Eine Sammlung von Lexika und Welten des Geschmacks</p>
+    </header>
+
+    <div class="grid-container">
+
+        <a href="https://SimonNeunteufel.github.io/WeltDerBrote/" class="card">
+            <div class="icon">🍞</div>
+            <h2>Welt der Brote</h2>
+            <span class="status-badge active-badge">Verfügbar</span>
+        </a>
+
+        <a href="https://SimonNeunteufel.github.io/EinLexikonDerAromen-DuefteDerWelt/" class="card">
+            <div class="icon">👃</div>
+            <h2>Lexikon der Aromen & Düfte</h2>
+            <span class="status-badge active-badge">Verfügbar</span>
+        </a>
+
+        <a href="https://SimonNeunteufel.github.io/WeltDesSuessen/" class="card disabled">
+            <div class="icon">🍰</div>
+            <h2>Welt des Süssen</h2>
+            <span class="status-badge">In Arbeit</span>
+        </a>
+
+        <a href="https://SimonNeunteufel.github.io/WeltDerSaucen/" class="card disabled">
+            <div class="icon">🥣</div>
+            <h2>Welt der Saucen</h2>
+            <span class="status-badge">In Arbeit</span>
+        </a>
+
+        <a href="https://SimonNeunteufel.github.io/WeltDesKaese/" class="card disabled">
+            <div class="icon">🧀</div>
+            <h2>Welt des Käse</h2>
+            <span class="status-badge">In Arbeit</span>
+        </a>
+
+        <a href="https://SimonNeunteufel.github.io/EinLexikonDerNuesseKerneUndOelsaaten/" class="card disabled">
+            <div class="icon">🥜</div>
+            <h2>Nüsse, Kerne & Ölsaaten</h2>
+            <span class="status-badge">In Arbeit</span>
+        </a>
+
+        <a href="https://SimonNeunteufel.github.io/EinLexikonDerPilze/" class="card disabled">
+            <div class="icon">🍄</div>
+            <h2>Lexikon der Pilze</h2>
+            <span class="status-badge">In Arbeit</span>
+        </a>
+
+        <a href="https://SimonNeunteufel.github.io/WeltDerWuersteUndDesSchinken/" class="card disabled">
+            <div class="icon">🥓</div>
+            <h2>Würste & Schinken</h2>
+            <span class="status-badge">In Arbeit</span>
+        </a>
+
+    </div>
+
+    <footer>
+        &copy; 2026 Kulinarisches Universum
+    </footer>
+
+</body>
+</html>

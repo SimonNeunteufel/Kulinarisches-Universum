@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mein Kulinarisches Universum</title>
+    <title>Kulinarisches Universum</title>
     <style>
         :root {
             --primary-color: #2c3e50;
-            --accent-color: #e67e22; /* Ein appetitliches Orange */
-            --bg-color: #f4f4f4;
+            --accent-color: #e67e22;
+            --admin-color: #c0392b; /* Rot für Admin Modus */
+            --bg-color: #f8f9fa;
             --card-bg: #ffffff;
-            --text-color: #333;
+            --text-color: #333333;
         }
 
         body {
@@ -23,163 +24,222 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            transition: background-color 0.5s;
         }
 
+        /* Header Bereich */
         header {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             color: white;
             width: 100%;
-            padding: 2rem 0;
+            padding: 2rem 1rem;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             margin-bottom: 2rem;
+            position: relative;
+        }
+
+        /* Admin Button oben rechts */
+        .admin-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .admin-toggle:hover {
+            background: rgba(255,255,255,0.3);
         }
 
         h1 {
             margin: 0;
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 300;
+            letter-spacing: 1px;
         }
 
         p.subtitle {
-            opacity: 0.8;
-            margin-top: 0.5rem;
+            opacity: 0.9;
+            margin-top: 0.8rem;
+            font-size: 1.2rem;
+            font-weight: 300;
         }
 
+        /* Grid Layout */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
             max-width: 1200px;
             width: 90%;
-            padding-bottom: 3rem;
+            padding-bottom: 4rem;
         }
 
-        /* Karten Design */
+        /* Karte Basis-Design */
         .card {
             background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 2rem;
+            border-radius: 15px;
+            padding: 2.5rem 2rem;
             text-decoration: none;
             color: var(--text-color);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            border-bottom: 4px solid var(--accent-color);
+            border-top: 5px solid var(--accent-color);
+            position: relative;
         }
 
         .card h2 {
-            margin-top: 0;
-            font-size: 1.25rem;
+            margin: 1rem 0 0.5rem 0;
+            font-size: 1.4rem;
             color: var(--primary-color);
         }
 
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
 
-        /* Icon Styling (Emojis als Platzhalter) */
         .icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        /* STATUS: NICHT VERFÜGBAR / AUSGEGRAUT */
-        .card.disabled {
-            background-color: #e0e0e0;
-            color: #888;
-            cursor: not-allowed;
-            filter: grayscale(100%);
-            opacity: 0.7;
-            pointer-events: none; /* Verhindert das Klicken */
-            border-bottom: 4px solid #999;
-            box-shadow: none;
-        }
-        
-        .card.disabled:hover {
-            transform: none;
+            font-size: 3.5rem;
+            line-height: 1;
         }
 
         .status-badge {
-            font-size: 0.8rem;
-            padding: 4px 8px;
-            border-radius: 4px;
-            margin-top: auto; /* Drückt Badge nach unten */
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            padding: 5px 12px;
+            border-radius: 20px;
             background-color: #eee;
+            color: #777;
+            font-weight: 600;
         }
 
-        .active-badge {
-            background-color: #dff0d8;
-            color: #3c763d;
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .card.disabled {
+            background-color: #eeeeee;
+            border-color: #999;
+            cursor: default;
+            pointer-events: none;
+        }
+        .card.disabled .icon, .card.disabled h2 {
+            opacity: 0.5;
+            filter: grayscale(100%);
+        }
+
+        /* ADMIN MODUS STYLES */
+        body.admin-mode {
+            background-color: #fff0f0; /* Leichter Rotschimmer im Hintergrund */
+        }
+        
+        body.admin-mode header {
+            background: linear-gradient(135deg, #c0392b 0%, #8e44ad 100%);
+        }
+
+        body.admin-mode .card {
+            border-top-color: var(--admin-color);
+            border: 2px solid var(--admin-color); /* Roter Rahmen */
+        }
+
+        body.admin-mode .card::after {
+            content: "ADMIN ZUGANG";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 0.6rem;
+            background: var(--admin-color);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        /* Im Admin Modus werden auch disabled cards klickbar */
+        body.admin-mode .card.disabled {
+            pointer-events: auto;
+            opacity: 0.8;
+            filter: none;
+            cursor: pointer;
         }
 
         footer {
             margin-top: auto;
-            padding: 1rem;
+            padding: 2rem;
+            color: #7f8c8d;
             font-size: 0.9rem;
-            color: #666;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Kulinarisches Universum</h1>
-        <p class="subtitle">Eine Sammlung von Lexika und Welten des Geschmacks</p>
+        <button class="admin-toggle" onclick="toggleAdmin()" title="Admin Login">🔒</button>
+        <h1 id="page-title">Kulinarisches Universum</h1>
+        <p class="subtitle" id="page-subtitle">Der zentrale Einstieg in die Welt des Geschmacks</p>
     </header>
 
     <div class="grid-container">
 
-        <a href="https://SimonNeunteufel.github.io/WeltDerBrote/" class="card">
+        <a href="https://simonneunteufel.github.io/WeltDerBrote/" class="card" data-repo="WeltDerBrote">
             <div class="icon">🍞</div>
             <h2>Welt der Brote</h2>
-            <span class="status-badge active-badge">Verfügbar</span>
+            <span class="status-badge status-active">Online</span>
         </a>
 
-        <a href="https://SimonNeunteufel.github.io/EinLexikonDerAromen-DuefteDerWelt/" class="card">
+        <a href="https://simonneunteufel.github.io/EinLexikonDerAromen-DuefteDerWelt/" class="card" data-repo="EinLexikonDerAromen-DuefteDerWelt">
             <div class="icon">👃</div>
-            <h2>Lexikon der Aromen & Düfte</h2>
-            <span class="status-badge active-badge">Verfügbar</span>
+            <h2>Aromen & Düfte</h2>
+            <span class="status-badge status-active">Online</span>
         </a>
 
-        <a href="https://SimonNeunteufel.github.io/WeltDesSuessen/" class="card disabled">
+        <a href="https://simonneunteufel.github.io/WeltDesSuessen/" class="card disabled" data-repo="WeltDesSuessen">
             <div class="icon">🍰</div>
             <h2>Welt des Süssen</h2>
-            <span class="status-badge">In Arbeit</span>
+            <span class="status-badge">Demnächst</span>
         </a>
 
-        <a href="https://SimonNeunteufel.github.io/WeltDerSaucen/" class="card disabled">
+        <a href="https://simonneunteufel.github.io/WeltDerSaucen/" class="card disabled" data-repo="WeltDerSaucen">
             <div class="icon">🥣</div>
             <h2>Welt der Saucen</h2>
-            <span class="status-badge">In Arbeit</span>
+            <span class="status-badge">Demnächst</span>
         </a>
 
-        <a href="https://SimonNeunteufel.github.io/WeltDesKaese/" class="card disabled">
+        <a href="https://simonneunteufel.github.io/WeltDesKaese/" class="card disabled" data-repo="WeltDesKaese">
             <div class="icon">🧀</div>
             <h2>Welt des Käse</h2>
-            <span class="status-badge">In Arbeit</span>
+            <span class="status-badge">Demnächst</span>
         </a>
 
-        <a href="https://SimonNeunteufel.github.io/EinLexikonDerNuesseKerneUndOelsaaten/" class="card disabled">
+        <a href="https://simonneunteufel.github.io/EinLexikonDerNuesseKerneUndOelsaaten/" class="card disabled" data-repo="EinLexikonDerNuesseKerneUndOelsaaten">
             <div class="icon">🥜</div>
-            <h2>Nüsse, Kerne & Ölsaaten</h2>
-            <span class="status-badge">In Arbeit</span>
+            <h2>Nüsse & Kerne</h2>
+            <span class="status-badge">Demnächst</span>
         </a>
 
-        <a href="https://SimonNeunteufel.github.io/EinLexikonDerPilze/" class="card disabled">
+        <a href="https://simonneunteufel.github.io/EinLexikonDerPilze/" class="card disabled" data-repo="EinLexikonDerPilze">
             <div class="icon">🍄</div>
             <h2>Lexikon der Pilze</h2>
-            <span class="status-badge">In Arbeit</span>
+            <span class="status-badge">Demnächst</span>
         </a>
 
-        <a href="https://SimonNeunteufel.github.io/WeltDerWuersteUndDesSchinken/" class="card disabled">
+        <a href="https://simonneunteufel.github.io/WeltDerWuersteUndDesSchinken/" class="card disabled" data-repo="WeltDerWuersteUndDesSchinken">
             <div class="icon">🥓</div>
             <h2>Würste & Schinken</h2>
-            <span class="status-badge">In Arbeit</span>
+            <span class="status-badge">Demnächst</span>
         </a>
 
     </div>
@@ -188,5 +248,63 @@
         &copy; 2026 Kulinarisches Universum
     </footer>
 
+    <script>
+        // KONFIGURATION
+        const GITHUB_USER = "simonneunteufel";
+        // WICHTIG: Ändere "meinGeheimesPasswort" in etwas, das nur du kennst.
+        const ADMIN_PASS = "SimonChef2026"; 
+
+        let isAdmin = false;
+
+        function toggleAdmin() {
+            if (!isAdmin) {
+                // Login Versuch
+                let input = prompt("Bitte Admin-Passwort eingeben:");
+                if (input === ADMIN_PASS) {
+                    activateAdminMode();
+                } else if (input !== null) {
+                    alert("Falsches Passwort!");
+                }
+            } else {
+                // Logout
+                deactivateAdminMode();
+            }
+        }
+
+        function activateAdminMode() {
+            isAdmin = true;
+            document.body.classList.add('admin-mode');
+            
+            // Icon ändern
+            document.querySelector('.admin-toggle').textContent = "🔓";
+            document.getElementById('page-title').textContent = "ADMIN BEREICH";
+            document.getElementById('page-subtitle').textContent = "Zugriff auf Konfiguration und Keys";
+
+            // Links umschreiben auf admin.html
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const repoName = card.getAttribute('data-repo');
+                // Ziel: .../RepoName/admin.html
+                card.href = `https://${GITHUB_USER}.github.io/${repoName}/admin.html`;
+            });
+        }
+
+        function deactivateAdminMode() {
+            isAdmin = false;
+            document.body.classList.remove('admin-mode');
+
+            // Icon zurücksetzen
+            document.querySelector('.admin-toggle').textContent = "🔒";
+            document.getElementById('page-title').textContent = "Kulinarisches Universum";
+            document.getElementById('page-subtitle').textContent = "Der zentrale Einstieg in die Welt des Geschmacks";
+
+            // Links zurücksetzen auf Standard (Repo Root -> index.html)
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const repoName = card.getAttribute('data-repo');
+                card.href = `https://${GITHUB_USER}.github.io/${repoName}/`;
+            });
+        }
+    </script>
 </body>
 </html>

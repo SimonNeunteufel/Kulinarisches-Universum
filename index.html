@@ -7,7 +7,7 @@
     <style>
         :root {
             --primary-color: #2c3e50;
-            --accent-color: #bdc3c7; /* Dezentes Grau für Rahmen */
+            --accent-color: #bdc3c7; 
             --admin-color: #c0392b; 
             --bg-color: #f8f9fa;
             --card-bg: #ffffff;
@@ -18,117 +18,82 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin: 0; padding: 0;
+            display: flex; flex-direction: column; align-items: center;
             min-height: 100vh;
         }
 
         header {
             background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            color: white;
-            width: 100%;
-            padding: 3rem 1rem;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-            position: relative;
+            color: white; width: 100%; padding: 3rem 1rem; text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 2rem; position: relative;
         }
 
         .admin-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: all 0.3s;
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3);
+            color: white; padding: 8px 12px; border-radius: 8px; cursor: pointer;
+            font-size: 1.2rem; transition: all 0.3s;
         }
         .admin-toggle:hover { background: rgba(255,255,255,0.3); }
 
         h1 { margin: 0; font-size: 3rem; font-weight: 300; letter-spacing: 1px; }
         p.subtitle { opacity: 0.9; margin-top: 0.8rem; font-size: 1.2rem; font-weight: 300; }
 
+        .page-content { flex: 1; width: 100%; display: flex; justify-content: center; padding-bottom: 2rem;}
+
         .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            width: 90%;
-            padding-bottom: 4rem;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem; max-width: 1200px; width: 90%;
         }
 
-        /* KARTEN DESIGN (Angepasst an grauen Button Look) */
+        /* CARD STYLE (Referenz für die anderen Seiten) */
         .card {
             background-color: var(--card-bg);
-            border: 1px solid #bdc3c7; /* Grauer Rahmen */
-            border-radius: 6px;        /* Nur leicht abgerundet */
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
             padding: 2.5rem 2rem;
-            text-decoration: none;
-            color: var(--text-color);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sehr dezenter Schatten */
+            text-decoration: none; color: var(--text-color);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
             transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
+            display: flex; flex-direction: column; align-items: center; text-align: center;
             position: relative;
+            border-top: 5px solid #e67e22; /* Default Accent */
         }
-
-        .card h2 {
-            margin: 1rem 0 0.5rem 0;
-            font-size: 1.5rem;
-            color: var(--primary-color);
-            font-weight: 400;
-        }
-
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border-color: #95a5a6;
-        }
-
+        .card h2 { margin: 1rem 0 0.5rem 0; font-size: 1.5rem; color: var(--primary-color); font-weight: 400; }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .icon { font-size: 3.5rem; line-height: 1; margin-bottom: 10px; }
 
         .status-badge {
-            margin-top: 1rem;
-            font-size: 0.85rem;
-            padding: 5px 12px;
-            border-radius: 20px;
-            background-color: #f1f2f6;
-            color: #7f8c8d;
-            font-weight: 600;
-            border: 1px solid #dfe4ea;
+            margin-top: 1rem; font-size: 0.85rem; padding: 5px 12px;
+            border-radius: 20px; font-weight: 600;
         }
-
-        .status-active {
-            background-color: #d4edda;
-            color: #155724;
-            border-color: #c3e6cb;
-        }
+        .status-active { background-color: #d4edda; color: #155724; }
 
         .card.disabled {
-            background-color: #f1f2f6; /* Helleres Grau für inaktive */
-            border-color: #dfe4ea;
-            cursor: default;
-            pointer-events: none;
-            opacity: 0.8;
+            background-color: #f9f9f9; cursor: default; pointer-events: none; opacity: 0.7;
+            border-top-color: #bdc3c7;
         }
-        .card.disabled .icon, .card.disabled h2 { opacity: 0.4; filter: grayscale(100%); }
+        .card.disabled .icon, .card.disabled h2 { opacity: 0.5; filter: grayscale(100%); }
+        .card.disabled .status-badge { background-color: #f1f2f6; color: #7f8c8d; }
 
-        /* Admin Styles bleiben gleich */
+        /* Admin Styles */
         body.admin-mode { background-color: #fff0f0; }
         body.admin-mode header { background: linear-gradient(135deg, #c0392b 0%, #8e44ad 100%); }
         body.admin-mode .card { border: 2px solid var(--admin-color); }
         body.admin-mode .card.disabled { pointer-events: auto; opacity: 1; filter: none; cursor: pointer; }
 
-        footer { margin-top: auto; padding: 2rem; color: #7f8c8d; font-size: 0.9rem; }
+        /* Footer */
+        .footer-bar {
+            background-color: #e8ecef;
+            padding: 1rem 2rem;
+            width: 100%;
+            box-sizing: border-box; /* Wichtig damit Padding nicht Breite sprengt */
+            border-top: 1px solid #dee2e6;
+            margin-top: auto;
+        }
+        .copyright { font-size: 0.8rem; color: #888; text-align: left; }
+
     </style>
 </head>
 <body>
@@ -139,57 +104,61 @@
         <p class="subtitle" id="page-subtitle">Der zentrale Einstieg in die Welt des Geschmacks</p>
     </header>
 
-    <div class="grid-container">
-        <a href="https://simonneunteufel.github.io/WeltDerBrote/" class="card" data-repo="WeltDerBrote">
-            <div class="icon">🍞</div>
-            <h2>Welt der Brote</h2>
-            <span class="status-badge status-active">Online</span>
-        </a>
+    <div class="page-content">
+        <div class="grid-container">
+            <a href="https://simonneunteufel.github.io/WeltDerBrote/" class="card" data-repo="WeltDerBrote">
+                <div class="icon">🍞</div>
+                <h2>Welt der Brote</h2>
+                <span class="status-badge status-active">Online</span>
+            </a>
 
-        <a href="https://simonneunteufel.github.io/EinLexikonDerAromen-DuefteDerWelt/" class="card" data-repo="EinLexikonDerAromen-DuefteDerWelt">
-            <div class="icon">👃</div>
-            <h2>Aromen & Düfte</h2>
-            <span class="status-badge status-active">Online</span>
-        </a>
+            <a href="https://simonneunteufel.github.io/EinLexikonDerAromen-DuefteDerWelt/" class="card" data-repo="EinLexikonDerAromen-DuefteDerWelt">
+                <div class="icon">👃</div>
+                <h2>Aromen & Düfte</h2>
+                <span class="status-badge status-active">Online</span>
+            </a>
 
-        <a href="https://simonneunteufel.github.io/WeltDesSuessen/" class="card disabled" data-repo="WeltDesSuessen">
-            <div class="icon">🍰</div>
-            <h2>Welt des Süssen</h2>
-            <span class="status-badge">Demnächst</span>
-        </a>
-        
-        <a href="https://simonneunteufel.github.io/WeltDerSaucen/" class="card disabled" data-repo="WeltDerSaucen">
-            <div class="icon">🥣</div>
-            <h2>Welt der Saucen</h2>
-            <span class="status-badge">Demnächst</span>
-        </a>
+            <a href="https://simonneunteufel.github.io/WeltDesSuessen/" class="card disabled" data-repo="WeltDesSuessen">
+                <div class="icon">🍰</div>
+                <h2>Welt des Süssen</h2>
+                <span class="status-badge">Demnächst</span>
+            </a>
+            
+            <a href="https://simonneunteufel.github.io/WeltDerSaucen/" class="card disabled" data-repo="WeltDerSaucen">
+                <div class="icon">🥣</div>
+                <h2>Welt der Saucen</h2>
+                <span class="status-badge">Demnächst</span>
+            </a>
 
-        <a href="https://simonneunteufel.github.io/WeltDesKaese/" class="card disabled" data-repo="WeltDesKaese">
-            <div class="icon">🧀</div>
-            <h2>Welt des Käse</h2>
-            <span class="status-badge">Demnächst</span>
-        </a>
+            <a href="https://simonneunteufel.github.io/WeltDesKaese/" class="card disabled" data-repo="WeltDesKaese">
+                <div class="icon">🧀</div>
+                <h2>Welt des Käse</h2>
+                <span class="status-badge">Demnächst</span>
+            </a>
 
-        <a href="https://simonneunteufel.github.io/EinLexikonDerNuesseKerneUndOelsaaten/" class="card disabled" data-repo="EinLexikonDerNuesseKerneUndOelsaaten">
-            <div class="icon">🥜</div>
-            <h2>Nüsse & Kerne</h2>
-            <span class="status-badge">Demnächst</span>
-        </a>
+            <a href="https://simonneunteufel.github.io/EinLexikonDerNuesseKerneUndOelsaaten/" class="card disabled" data-repo="EinLexikonDerNuesseKerneUndOelsaaten">
+                <div class="icon">🥜</div>
+                <h2>Nüsse & Kerne</h2>
+                <span class="status-badge">Demnächst</span>
+            </a>
 
-        <a href="https://simonneunteufel.github.io/EinLexikonDerPilze/" class="card disabled" data-repo="EinLexikonDerPilze">
-            <div class="icon">🍄</div>
-            <h2>Lexikon der Pilze</h2>
-            <span class="status-badge">Demnächst</span>
-        </a>
+            <a href="https://simonneunteufel.github.io/EinLexikonDerPilze/" class="card disabled" data-repo="EinLexikonDerPilze">
+                <div class="icon">🍄</div>
+                <h2>Lexikon der Pilze</h2>
+                <span class="status-badge">Demnächst</span>
+            </a>
 
-        <a href="https://simonneunteufel.github.io/WeltDerWuersteUndDesSchinken/" class="card disabled" data-repo="WeltDerWuersteUndDesSchinken">
-            <div class="icon">🥓</div>
-            <h2>Würste & Schinken</h2>
-            <span class="status-badge">Demnächst</span>
-        </a>
+            <a href="https://simonneunteufel.github.io/WeltDerWuersteUndDesSchinken/" class="card disabled" data-repo="WeltDerWuersteUndDesSchinken">
+                <div class="icon">🥓</div>
+                <h2>Würste & Schinken</h2>
+                <span class="status-badge">Demnächst</span>
+            </a>
+        </div>
     </div>
 
-    <footer>&copy; 2026 Kulinarisches Universum</footer>
+    <div class="footer-bar">
+        <div class="copyright">&copy; Simon Neunteufel</div>
+    </div>
 
     <script>
         const GITHUB_USER = "simonneunteufel";
